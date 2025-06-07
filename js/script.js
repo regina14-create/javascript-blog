@@ -45,8 +45,53 @@ function titleClickHandler(event){
 
 }
 
-const links = document.querySelectorAll('.titles a');
 
-for(let link of links){
-  link.addEventListener('click', titleClickHandler);
+
+
+
+
+const optArticleSelector = '.post',
+  optTitleSelector = '.post-title',
+  optTitleListSelector = '.titles';
+
+function generateTitleLinks(){
+  console.log('The generate TitleLinks function was called');
+
+  /* remove contents of titleList */
+  const titleList = document.querySelector(optTitleListSelector);
+  titleList.innerHTML = '';
+
+   /* create an empty string to accumulate HTML */
+  let html = '';
+
+  /* for each article */
+  const articles = document.querySelectorAll(optArticleSelector);
+
+  for (let article of articles) {
+    console.log(article); // временно выводим в консоль, чтобы проверить
+
+    /* get the article id */
+    const articleId = article.getAttribute('id');
+    console.log(articleId); // отладка
+
+    /* find the title element */
+    const articleTitle = article.querySelector(optTitleSelector).innerHTML;
+    /* create HTML of the link */
+    const linkHTML = '<li><a href="#' + articleId + '"><span>' + articleTitle + '</span></a></li>';
+    console.log(linkHTML);
+
+    /* add linkHTML to html variable */
+    html += linkHTML;
+
+    console.log(html);
+  }
+
+ /* after the loop, insert all links at once */
+  titleList.innerHTML = html;
+
+  const links = document.querySelectorAll('.titles a');
+  for(let link of links){
+    link.addEventListener('click', titleClickHandler);
+  }
 }
+generateTitleLinks();
