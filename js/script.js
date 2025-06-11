@@ -31,17 +31,17 @@ function titleClickHandler(event){
 
   /* get 'href' attribute from the clicked link */
 
-    const articleSelector = clickedElement.getAttribute('href');
-    console.log('articleSelector:', articleSelector);
+  const articleSelector = clickedElement.getAttribute('href');
+  console.log('articleSelector:', articleSelector);
 
   /* find the correct article using the selector (value of 'href' attribute) */
 
-    const targetArticle = document.querySelector(articleSelector);
-    console.log('targetArticle:', targetArticle);
+  const targetArticle = document.querySelector(articleSelector);
+  console.log('targetArticle:', targetArticle);
 
   /* add class 'active' to the correct article */
 
-    targetArticle.classList.add('active');
+  targetArticle.classList.add('active');
 
 }
 
@@ -53,8 +53,9 @@ function titleClickHandler(event){
 const optArticleSelector = '.post',
   optTitleSelector = '.post-title',
   optTitleListSelector = '.titles',
-  optArticleTagsSelector = '.post-tags .list';
-  const optArticleAuthorSelector = '.post-author';
+  optArticleTagsSelector = '.post-tags .list',
+  optArticleAuthorSelector = '.post-author',
+  optTagsListSelector =  '.tags.list';
 
 
 function generateTitleLinks(customSelector = ''){
@@ -66,7 +67,7 @@ function generateTitleLinks(customSelector = ''){
   const titleList = document.querySelector(optTitleListSelector);
   titleList.innerHTML = '';
 
-   /* create an empty string to accumulate HTML */
+  /* create an empty string to accumulate HTML */
   let html = '';
 
   /* for each article */
@@ -92,7 +93,7 @@ function generateTitleLinks(customSelector = ''){
     console.log(html);
   }
 
- /* after the loop, insert all links at once */
+  /* after the loop, insert all links at once */
   titleList.innerHTML = html;
 
   const links = document.querySelectorAll('.titles a');
@@ -120,7 +121,7 @@ function generateTags(){
     const articleTags = article.getAttribute('data-tags');
 
     /* split tags into array разделить теги в массив */
-     const articleTagsArray = articleTags.split(' ');
+    const articleTagsArray = articleTags.split(' ');
     console.log('Теги как массив:', articleTagsArray); // ['cat', 'cactus', 'scissors']
 
     /* START LOOP: for each tag Start Loop: для каждого тега */
@@ -163,11 +164,11 @@ function tagClickHandler(event){
 
   /* START LOOP: for each active tag link */
   for (let activeLink of activeTagLinks) {
-  activeLink.classList.remove('active');
+    activeLink.classList.remove('active');
   }
 
 
-    /* remove class active */
+  /* remove class active */
 
   /* END LOOP: for each active tag link */
 
@@ -176,9 +177,9 @@ function tagClickHandler(event){
 
   /* START LOOP: for each found tag link */
   for (let matchingLink of matchingTagLinks) {
-  matchingLink.classList.add('active');
+    matchingLink.classList.add('active');
   }
-    /* add class active */
+  /* add class active */
 
   /* END LOOP: for each found tag link */
 
@@ -197,7 +198,7 @@ function addClickListenersToTags(){
 
   /* START LOOP: for each link */
 
-    /* add tagClickHandler as event listener for that link */
+  /* add tagClickHandler as event listener for that link */
 
   /* END LOOP: for each link */
 }
@@ -246,3 +247,59 @@ function addClickListenersToAuthors() {
 }
 generateAuthors();
 addClickListenersToAuthors();
+
+
+
+ function generateTags(){
+  /* [NEW] create a new variable allTags with an empty array */
+  let allTags = [];
+
+  /* find all articles находим все статьи */
+  const articles = document.querySelectorAll(optArticleSelector);
+
+  /* START LOOP: for every article: перебираем каждую статью */
+  for (let article of articles) {
+
+    /* find tags wrapper находим контейнер для тегов внутри статьи */
+    const tagsWrapper = article.querySelector(optArticleTagsSelector);
+
+    /* make html variable with empty string создаём переменную для HTML-кода */
+    let html = '';
+
+    /* get tags from data-tags attribute получаем строку тегов из data-tags */
+    const articleTags = article.getAttribute('data-tags');
+
+    /* split tags into array превращаем строку тегов в массив */
+    const articleTagsArray = articleTags.split(' ');
+
+    /* START LOOP: for each tag перебираем каждый тег */
+    for (let tag of articleTagsArray) {
+
+      /* generate HTML of the link генерируем HTML-ссылку */
+      const linkHTML = '<li><a href="#tag-' + tag + '">' + tag + '</a></li>';
+
+      /* add generated code to html variable добавляем HTML-ссылку в html для статьи */
+      html += linkHTML;
+
+      /* [NEW] check if this link is NOT already in allTags*/
+      if(allTags.indexOf(linkHTML) == -1){
+        /* [NEW] add generated code to allTags array */
+        allTags.push(linkHTML);
+      }
+
+    /* END LOOP: for each tag */
+    }
+
+    /* insert HTML of all the links into the tags wrapper вставляем HTML-ссылки тегов в статью  */
+    tagsWrapper.innerHTML = html;
+  /* END LOOP: for every article: */
+  }
+  /* [NEW] find list of tags in right column */
+  const tagList = document.querySelector(optTagsListSelector);
+
+  /* [NEW] add html from allTags to tagList */
+  tagList.innerHTML = allTags.join(' ');
+}
+
+generateTags();
+addClickListenersToTags();

@@ -1,17 +1,103 @@
-/* Error: There is no module with the namespace "color".
- *    ,
- * 41 |     color: color.adjust($color-dark, $lightness: 20%);
- *    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
- *    '
- *   sass\style.scss 41:12  root stylesheet */
-
-body::before {
-  font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
-      "Droid Sans Mono", monospace, monospace;
-  white-space: pre;
-  display: block;
-  padding: 1em;
-  margin-bottom: 1em;
-  border-bottom: 2px solid black;
-  content: 'Error: There is no module with the namespace "color".\a    \2577 \a 41 \2502      color: color.adjust($color-dark, $lightness: 20%);\d\a    \2502             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\a    \2575 \a   sass\\style.scss 41:12  root stylesheet';
+@import url("https://fonts.googleapis.com/css?family=Oswald:400,600|Sacramento|Source+Sans+Pro:300&subset=latin-ext");
+/* Variables */
+/* Global */
+*, *::before, *::after {
+  box-sizing: border-box;
 }
+
+body {
+  background: #fff;
+  font-family: "Source Sans Pro", sans-serif;
+  color: #444;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.container {
+  max-width: 1140px;
+  margin: 0 auto;
+}
+
+.section-title {
+  font-size: 22px;
+  text-transform: uppercase;
+  font-family: "Oswald", sans-serif;
+  font-weight: 600;
+}
+.section-title span {
+  text-transform: none;
+  font-weight: 400;
+  color: #444;
+}
+
+/* Layout */
+.wrapper {
+  display: flex;
+  margin-left: 10px;
+}
+
+.sidebar {
+  flex: 1 0 0;
+}
+
+.posts {
+  flex: 2 0 0;
+}
+
+.sidebar, .posts {
+  background: #fff;
+  margin-right: 10px;
+  padding: 40px;
+  border: 1px solid #444;
+  border-radius: 5px;
+}
+
+/* Logo */
+.logo {
+  font-family: "Sacramento", cursive;
+  font-weight: 400;
+  font-size: 104px;
+  line-height: 1;
+  text-align: center;
+}
+
+/* Lists */
+.list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.list .active {
+  font-weight: bold;
+}
+
+.list-horizontal li {
+  display: inline-block;
+}
+
+/* Authors */
+.authors li {
+  margin-bottom: 12px;
+}
+
+/* Post */
+.post {
+  display: none;
+}
+.post.active {
+  display: block;
+}
+
+.post-author {
+  font-style: italic;
+}
+
+.post-tags {
+  display: flex;
+}
+.post-tags p {
+  margin: 0 10px 0 0;
+}
+
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL3Nhc3Mvc3R5bGUuc2NzcyIsInN0eWxlLmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBUSxxSEFBQTtBQUVSLGNBQUE7QUFVQSxXQUFBO0FBRUE7RUFDRSxzQkFBQTtBQ1ZGOztBRGFBO0VBQ0UsZ0JBZlk7RUFnQlosMENBVlU7RUFXVixXQWhCVztFQWlCWCxnQkFBQTtFQUNBLGVBQUE7RUFDQSxnQkFBQTtBQ1ZGOztBRGFBO0VBQ0UsaUJBQUE7RUFDQSxjQUFBO0FDVkY7O0FEYUE7RUFDRSxlQUFBO0VBQ0EseUJBQUE7RUFDQSxpQ0ExQlk7RUEyQlosZ0JBQUE7QUNWRjtBRFlFO0VBQ0Usb0JBQUE7RUFDQSxnQkFBQTtFQUNBLFdBcENTO0FDMEJiOztBRGNBLFdBQUE7QUFFQTtFQUNFLGFBQUE7RUFDQSxpQkFBQTtBQ1pGOztBRGVBO0VBQ0UsV0FBQTtBQ1pGOztBRGVBO0VBQ0UsV0FBQTtBQ1pGOztBRGVBO0VBQ0UsZ0JBekRZO0VBMERaLGtCQUFBO0VBQ0EsYUFBQTtFQUNBLHNCQUFBO0VBQ0Esa0JBQUE7QUNaRjs7QURlQSxTQUFBO0FBRUE7RUFDRSxrQ0EvRFU7RUFnRVYsZ0JBQUE7RUFDQSxnQkFBQTtFQUNBLGNBQUE7RUFDQSxrQkFBQTtBQ2JGOztBRGdCQSxVQUFBO0FBRUE7RUFDRSxxQkFBQTtFQUNBLFNBQUE7RUFDQSxVQUFBO0FDZEY7QURnQkU7RUFDRSxpQkFBQTtBQ2RKOztBRG1CRTtFQUNFLHFCQUFBO0FDaEJKOztBRG9CQSxZQUFBO0FBR0U7RUFDRSxtQkFBQTtBQ25CSjs7QUR1QkEsU0FBQTtBQUNBO0VBQ0UsYUFBQTtBQ3BCRjtBRHNCRTtFQUNFLGNBQUE7QUNwQko7O0FEd0JBO0VBQ0Usa0JBQUE7QUNyQkY7O0FEd0JBO0VBQ0UsYUFBQTtBQ3JCRjtBRHVCRTtFQUNFLGtCQUFBO0FDckJKIiwiZmlsZSI6InN0eWxlLmNzcyJ9 */
