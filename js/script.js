@@ -6,6 +6,7 @@ const templates = {
   articleTagLink: Handlebars.compile(document.querySelector('#template-article-tag-link').innerHTML),
   articleAuthorLink: Handlebars.compile(document.querySelector('#template-article-author-link').innerHTML),
   tagCloudLink: Handlebars.compile(document.querySelector('#template-tag-cloud-link').innerHTML),
+  authorCloudLink: Handlebars.compile(document.querySelector('#template-author-cloud-link').innerHTML),
 };
 
 
@@ -277,17 +278,41 @@ addClickListenersToTags();
 
 function generateAuthors() {
   const articles = document.querySelectorAll(optArticleSelector);
+  const allAuthors = {};
 
   for (let article of articles) {
     const authorWrapper = article.querySelector(optArticleAuthorSelector);
     const articleAuthor = article.getAttribute('data-author');
 
+    // Вставка автора в статью
     const authorHTML = templates.articleAuthorLink({ author: articleAuthor });
-
-
     authorWrapper.innerHTML = authorHTML;
+
+    // Подсчёт авторов
+    if (!allAuthors[articleAuthor]) {
+      allAuthors[articleAuthor] = 1;
+    } else {
+      allAuthors[articleAuthor]++;
+    }
   }
+
+  // Объект для шаблона
+  const allAuthorsData = { authors: [] };
+
+  for (let author in allAuthors) {
+    allAuthorsData.authors.push({
+      author: author,
+      count: allAuthors[author],
+      className: 'author-size-' + allAuthors[author] // если хочешь масштаб по количеству
+    });
+  }
+
+  const authorList = document.querySelector('.authors');
+  authorList.innerHTML = templates.authorCloudLink(allAuthorsData);
+
+  console.log('allAuthorsData:', allAuthorsData);
 }
+
 
 function authorClickHandler(event) {
   event.preventDefault();
