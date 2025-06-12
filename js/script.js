@@ -1,4 +1,13 @@
+/* global Handlebars */
 'use strict';
+
+const templates = {
+  articleLink: Handlebars.compile(document.querySelector('#template-article-link').innerHTML),
+  articleTagLink: Handlebars.compile(document.querySelector('#template-article-tag-link').innerHTML),
+  articleAuthorLink: Handlebars.compile(document.querySelector('#template-article-author-link').innerHTML),
+  tagCloudLink: Handlebars.compile(document.querySelector('#template-tag-cloud-link').innerHTML),
+};
+
 
 function titleClickHandler(event){
   event.preventDefault();
@@ -86,7 +95,9 @@ function generateTitleLinks(customSelector = ''){
     /* find the title element */
     const articleTitle = article.querySelector(optTitleSelector).innerHTML;
     /* create HTML of the link */
-    const linkHTML = '<li><a href="#' + articleId + '"><span>' + articleTitle + '</span></a></li>';
+    const linkHTMLData = { id: articleId, title: articleTitle };
+    const linkHTML = templates.articleLink(linkHTMLData);
+
     console.log(linkHTML);
 
     /* add linkHTML to html variable */
@@ -159,7 +170,7 @@ function generateTags(){
       console.log('Один тег:', tag);
 
       // генерируем ссылку для тега внутри статьи
-      const linkHTML = '<li><a href="#tag-' + tag + '">' + tag + '</a></li>';
+      const linkHTML = templates.articleTagLink({ tag: tag });
       html += linkHTML;
 
       /* [NEW] check if this link is NOT already in allTags*/
@@ -191,9 +202,12 @@ function generateTags(){
     const tagClass = calculateTagClass(allTags[tag], tagsParams);
     console.log('Tag:', tag, '| allTags:', allTags[tag], '| tagClass:', tagClass);
 
-    // генерируем ссылку с классом и количеством
-    const tagLinkHTML = '<li><a class="' + tagClass + '" href="#tag-' + tag + '">' + tag + '</a> (' + allTags[tag] + ')</li>';
-    allTagsHTML += tagLinkHTML;
+    const tagData = {
+      tag: tag,
+      count: allTags[tag],
+      className: tagClass
+    };
+    allTagsHTML += templates.tagCloudLink(tagData);
   }
   tagList.innerHTML = allTagsHTML;
 }
@@ -268,7 +282,8 @@ function generateAuthors() {
     const authorWrapper = article.querySelector(optArticleAuthorSelector);
     const articleAuthor = article.getAttribute('data-author');
 
-    const authorHTML = '<a href="#author-' + articleAuthor + '">' + articleAuthor + '</a>';
+    const authorHTML = templates.articleAuthorLink({ author: articleAuthor });
+
 
     authorWrapper.innerHTML = authorHTML;
   }
@@ -306,4 +321,3 @@ generateTags();
 addClickListenersToTags();
 generateAuthors();
 addClickListenersToAuthors();
-

@@ -128,5 +128,6 @@ body {
 
 .list.tags li {
   display: inline-block;
-  margin-right: 10px; /* отступ между тегами */
+  margin-right: 10px;
+  /* отступ между тегами */
 }/*# sourceMappingURL=style.css.map */
